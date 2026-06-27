@@ -259,14 +259,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterSystem }) => {
 
   useEffect(() => {
     const pageTitleMap: Record<SubPage, string> = {
-      home: 'Trường Mầm non An Hữu - Nâng Bước Tương Lai',
-      about: 'Giới thiệu | Mầm non An Hữu - Nâng Bước Tương Lai',
-      staff: 'Đội ngũ giáo viên | Mầm non An Hữu - Nâng Bước Tương Lai',
-      activities: 'Hoạt động học tập | Mầm non An Hữu - Nâng Bước Tương Lai',
-      admissions: 'Tuyển sinh trực tuyến | Mầm non An Hữu - Nâng Bước Tương Lai',
-      contact: 'Liên hệ | Mầm non An Hữu - Nâng Bước Tương Lai'
+      home: 'Trường Mầm non An Hữu - Khởi Đầu Vững Chắc',
+      about: 'Giới thiệu | Mầm non An Hữu - Khởi Đầu Vững Chắc',
+      staff: 'Đội ngũ giáo viên | Mầm non An Hữu - Khởi Đầu Vững Chắc',
+      activities: 'Hoạt động học tập | Mầm non An Hữu - Khởi Đầu Vững Chắc',
+      admissions: 'Tuyển sinh trực tuyến | Mầm non An Hữu - Khởi Đầu Vững Chắc',
+      contact: 'Liên hệ | Mầm non An Hữu - Khởi Đầu Vững Chắc'
     };
-    document.title = pageTitleMap[activePage] || 'Trường Mầm non An Hữu - Nâng Bước Tương Lai';
+    document.title = pageTitleMap[activePage] || 'Trường Mầm non An Hữu - Khởi Đầu Vững Chắc';
   }, [activePage]);
 
   // Admissions Form State
