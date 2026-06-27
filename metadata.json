@@ -1,0 +1,6 @@
+{
+  "name": "Hệ thống Quản lý THPT",
+  "description": "Hệ thống quản lý tổng thể trường Trung học Phổ thông, bao gồm Học sinh, Nhân sự, Chuyên môn và Thời khóa biểu.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

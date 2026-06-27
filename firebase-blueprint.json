@@ -1,0 +1,108 @@
+{
+  "entities": {
+    "Student": {
+      "title": "Student",
+      "description": "Hồ sơ cá nhân và kết quả học tập của học sinh",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Mã định danh học sinh"
+        },
+        "name": {
+          "type": "string",
+          "description": "Họ và tên học sinh"
+        },
+        "dob": {
+          "type": "string",
+          "description": "Ngày sinh"
+        },
+        "gender": {
+          "type": "string",
+          "description": "Giới tính"
+        },
+        "grade": {
+          "type": "string",
+          "description": "Lớp học"
+        },
+        "track": {
+          "type": "string",
+          "description": "Định hướng tổ hợp môn (KHTN hay KHXH)"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["Đang Học", "Bảo Lưu", "Đình Chỉ"],
+          "description": "Trạng thái học tập"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Số điện thoại liên lạc"
+        },
+        "address": {
+          "type": "string",
+          "description": "Địa chỉ thường trú"
+        },
+        "guardian": {
+          "type": "string",
+          "description": "Họ tên cha mẹ/người bảo hộ"
+        }
+      },
+      "required": ["id", "name", "dob", "gender", "grade", "track", "status"]
+    },
+    "Staff": {
+      "title": "Staff",
+      "description": "Hồ sơ của một cán bộ, giáo viên trong nhà trường",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Mã nội bộ của cán bộ giáo viên"
+        },
+        "name": {
+          "type": "string",
+          "description": "Họ và tên cán bộ giáo viên"
+        },
+        "dob": {
+          "type": "string",
+          "description": "Ngày sinh"
+        },
+        "gender": {
+          "type": "string",
+          "description": "Giới tính (Nam/Nữ)"
+        },
+        "role": {
+          "type": "string",
+          "description": "Chức vụ hoặc chuyên môn"
+        },
+        "department": {
+          "type": "string",
+          "description": "Tổ chuyên môn trực thuộc"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Số điện thoại di động"
+        },
+        "email": {
+          "type": "string",
+          "description": "Thư điện tử công vụ"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["Đang Công Tác", "Nghỉ Phép", "Bình Chỉ / Khóa"],
+          "description": "Tình trạng công tác"
+        }
+      },
+      "required": ["id", "name", "dob", "gender", "role", "department", "email", "status"]
+    }
+  },
+  "firestore": {
+    "students/{studentId}": {
+      "schema": "Student",
+      "description": "Kho lưu trữ hồ sơ học sinh THPT An Hữu"
+    },
+    "staff/{staffId}": {
+      "schema": "Staff",
+      "description": "Kho lưu trữ cán bộ, giáo viên và nhân viên hành chính"
+    }
+  }
+}

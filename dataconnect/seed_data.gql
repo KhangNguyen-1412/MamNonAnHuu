@@ -1,0 +1,28 @@
+mutation SeedData @transaction {
+  staff_insertMany(data: [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440001",
+      name: "Jane Doe",
+      email: "jane.doe@example.com",
+      role: "Lead Teacher"
+    }
+  ])
+  classroom_insertMany(data: [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440002",
+      name: "Sunflowers",
+      capacity: 20,
+      leadTeacherId: "550e8400-e29b-41d4-a716-446655440001"
+    }
+  ])
+  student_insertMany(data: [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440003",
+      firstName: "John",
+      lastName: "Smith",
+      dateOfBirth: "2018-05-15",
+      enrollmentDate: "2023-09-01",
+      classroomId: "550e8400-e29b-41d4-a716-446655440002"
+    }
+  ])
+}

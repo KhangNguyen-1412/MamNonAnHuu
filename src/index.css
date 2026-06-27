@@ -1,0 +1,697 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Nunito:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&family=Quicksand:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Lora", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-preschool: "Quicksand", "Nunito", sans-serif;
+  --font-mono: "ui-monospace", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+:root {
+  --chart-grid: #dce4ee;
+  --chart-tooltip-bg: #f5f8fc;
+  --chart-tooltip-border: #b8c6d9;
+  --chart-tooltip-text: #1e2a3a;
+  --chart-cursor-fill: #e8eef6;
+  --chart-axis-text: #7b8a9e;
+}
+
+html.dark {
+  --chart-grid: #1e2a3a;
+  --chart-tooltip-bg: #131a25;
+  --chart-tooltip-border: #283548;
+  --chart-tooltip-text: #c8d6e5;
+  --chart-cursor-fill: #1a2332;
+  --chart-axis-text: #5a6e85;
+}
+
+body {
+  background-color: #fcf8f2;
+  color: #2d251e;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+main {
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5ede0 !important;
+  border-left: 1px solid #e7e3d4 !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c2b5a5 !important;
+  border-radius: 5px;
+  border: 2px solid #f5ede0 !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d97706 !important;
+}
+
+/* Sidebar Scrollbar */
+.sidebar-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-scrollbar::-webkit-scrollbar-track {
+  background: #201914 !important;
+}
+
+.sidebar-scrollbar::-webkit-scrollbar-thumb {
+  background: #4a3d30 !important;
+  border-radius: 3px;
+  border: 1px solid #201914 !important;
+}
+
+.sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #f59e0b !important;
+}
+
+.sidebar-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #4a3d30 #201914 !important;
+}
+
+/* Main Content Scrollbar */
+.main-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.main-scrollbar::-webkit-scrollbar-track {
+  background: #f5ede0 !important;
+  border-left: 1px solid #e7e3d4 !important;
+}
+
+.main-scrollbar::-webkit-scrollbar-thumb {
+  background: #c2b5a5 !important;
+  border-radius: 5px;
+  border: 2px solid #f5ede0 !important;
+}
+
+.main-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #d97706 !important;
+}
+
+.main-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #c2b5a5 #f5ede0 !important;
+}
+
+/* Cross-browser scrollbars (e.g. Firefox) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #c2b5a5 #f5ede0 !important;
+}
+
+/* Base Inputs Customizations */
+.base-date-input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* Global Dark Mode Overrides */
+html.dark, html.dark body {
+  background-color: #0c1018 !important;
+  color: #c8d6e5 !important;
+}
+
+html.dark .bg-\[\#e8eef6\] {
+  background-color: #0c1018 !important;
+}
+
+html.dark .bg-\[\#f5f8fc\] {
+  background-color: #131a25 !important;
+}
+
+html.dark .bg-white, html.dark .bg-\[\#ffffff\] {
+  background-color: #131a25 !important;
+}
+
+html.dark .bg-\[\#f0f4fa\] {
+  background-color: #1a2332 !important;
+}
+
+html.dark .bg-\[\#edf2f9\] {
+  background-color: #1a2332 !important;
+}
+
+html.dark .bg-\[\#d4dde9\], html.dark .bg-\[\#d4dde9\] {
+  background-color: #1a2332 !important;
+}
+
+html.dark .text-\[\#1e2a3a\] {
+  color: #c8d6e5 !important;
+}
+
+html.dark .text-\[\#4a5568\] {
+  color: #8e9eb4 !important;
+}
+
+html.dark .text-\[\#7b8a9e\] {
+  color: #5a6e85 !important;
+}
+
+html.dark .border-\[\#b8c6d9\] {
+  border-color: #283548 !important;
+}
+
+html.dark .border-\[\#d4dde9\] {
+  border-color: #1e2a3a !important;
+}
+
+html.dark .hover\:bg-\[\#f0f4fa\]:hover {
+  background-color: #1a2332 !important;
+}
+
+html.dark .hover\:bg-\[\#b8c6d9\]:hover {
+  background-color: #283548 !important;
+}
+
+/* Alert Boxes Dark Mode Overrides */
+html.dark .bg-amber-50, html.dark .bg-yellow-50, html.dark .bg-orange-50 {
+  background-color: #2a1f10 !important;
+  border-color: #4a3415 !important;
+}
+html.dark .bg-orange-100, html.dark .bg-yellow-100, html.dark .bg-amber-100 {
+  background-color: #3d2a15 !important;
+  border-color: #5d3d1a !important;
+}
+html.dark .text-amber-900, html.dark .text-yellow-900, html.dark .text-orange-900,
+html.dark .text-amber-800, html.dark .text-yellow-800, html.dark .text-orange-800 {
+  color: #fbd38d !important;
+}
+html.dark .text-amber-700, html.dark .text-yellow-700, html.dark .text-orange-700,
+html.dark .text-amber-600, html.dark .text-yellow-600, html.dark .text-orange-600 {
+  color: #f6ad55 !important;
+}
+
+html.dark .bg-red-50, html.dark .bg-rose-50 {
+  background-color: #2c1616 !important;
+  border-color: #4c1c1c !important;
+}
+html.dark .bg-red-100, html.dark .bg-rose-100 {
+  background-color: #3f1e1e !important;
+  border-color: #5f2b2b !important;
+}
+html.dark .text-red-900, html.dark .text-rose-900,
+html.dark .text-red-800, html.dark .text-rose-800 {
+  color: #feb2b2 !important;
+}
+html.dark .text-rose-700, html.dark .text-rose-600,
+html.dark .text-red-700, html.dark .text-red-600 {
+  color: #fca5a5 !important;
+}
+
+html.dark .bg-green-50, html.dark .bg-emerald-50 {
+  background-color: #12221a !important;
+  border-color: #1b3d2b !important;
+}
+html.dark .bg-green-100, html.dark .bg-emerald-100 {
+  background-color: #1a3327 !important;
+  border-color: #244c38 !important;
+}
+html.dark .text-green-700, html.dark .text-green-900,
+html.dark .text-emerald-700, html.dark .text-emerald-900,
+html.dark .text-green-800, html.dark .text-emerald-800 {
+  color: #98d8be !important;
+}
+
+html.dark .bg-blue-50, html.dark .bg-indigo-50 {
+  background-color: #121c2c !important;
+  border-color: #1b2e4c !important;
+}
+html.dark .bg-blue-100, html.dark .bg-indigo-100 {
+  background-color: #1b2a40 !important;
+  border-color: #283e5c !important;
+}
+html.dark .text-blue-700, html.dark .text-indigo-700,
+html.dark .text-blue-900, html.dark .text-indigo-900,
+html.dark .text-blue-800, html.dark .text-indigo-800 {
+  color: #a3bffa !important;
+}
+
+/* Purple & Fuchsia Dark Mode Overrides */
+html.dark .bg-purple-50, html.dark .bg-fuchsia-50 {
+  background-color: #1a1024 !important;
+  border-color: #2e153c !important;
+}
+html.dark .bg-purple-100, html.dark .bg-fuchsia-100 {
+  background-color: #241432 !important;
+  border-color: #3b1d4f !important;
+}
+html.dark .text-purple-700, html.dark .text-fuchsia-700,
+html.dark .text-purple-900, html.dark .text-fuchsia-900,
+html.dark .text-purple-800, html.dark .text-fuchsia-800 {
+  color: #d8b4fe !important;
+}
+
+/* Disabled & Offline Fallback Elements */
+html.dark .bg-gray-100 {
+  background-color: #1a2332 !important;
+}
+html.dark .text-gray-400 {
+  color: #4a5568 !important;
+}
+html.dark .border-gray-200 {
+  border-color: #1e2a3a !important;
+}
+
+/* Scrollbars Dark Mode Overrides */
+html.dark ::-webkit-scrollbar-track,
+html.dark .main-scrollbar::-webkit-scrollbar-track {
+  background: #0c1018 !important;
+  border-left: 1px solid #1e2a3a !important;
+}
+
+html.dark ::-webkit-scrollbar-thumb,
+html.dark .main-scrollbar::-webkit-scrollbar-thumb {
+  background: #1e2a3a !important;
+  border: 2px solid #0c1018 !important;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover,
+html.dark .main-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #f59e0b !important;
+}
+
+html.dark .sidebar-scrollbar::-webkit-scrollbar-track {
+  background: #201914 !important;
+  border-left: none !important;
+}
+
+html.dark .sidebar-scrollbar::-webkit-scrollbar-thumb {
+  background: #4a3d30 !important;
+  border: 1px solid #201914 !important;
+}
+
+html.dark .sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #f59e0b !important;
+}
+
+html.dark .sidebar-scrollbar {
+  scrollbar-color: #4a3d30 #201914 !important;
+}
+
+/* Inputs & Textareas Global Dark Mode Fallbacks */
+html.dark input[type="text"],
+html.dark input[type="number"],
+html.dark input[type="email"],
+html.dark input[type="password"],
+html.dark textarea {
+  background-color: #131a25 !important;
+  border-color: #283548 !important;
+  color: #c8d6e5 !important;
+}
+
+html.dark ::placeholder {
+  color: #4a5568 !important;
+}
+
+/* Global Compact Tables Overrides */
+body.compact-tables td,
+body.compact-tables th {
+  padding-top: 0.5rem !important; /* py-2 */
+  padding-bottom: 0.5rem !important;
+  padding-left: 0.75rem !important; /* px-3 */
+  padding-right: 0.75rem !important;
+}
+
+/* ======================================================
+   GLOBAL NATIVE SELECT & DATE INPUT — Design System
+   Applies to all raw <select> and <input type="date">
+   that are NOT already wrapped by BaseSelect/BaseDatePicker
+   ====================================================== */
+
+/* Native <select> base style */
+select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232c5ea0' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 0.5rem center !important;
+  background-size: 0.85rem !important;
+  padding-right: 1.75rem !important;
+  cursor: pointer;
+  font-family: inherit;
+  background-color: #ffffff;
+  border: 1px solid #b8c6d9;
+  border-radius: 0.5rem;
+  color: #1e2a3a;
+  font-weight: 700;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+select:not([class]) {
+  border-radius: 0.75rem;
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
+  font-size: 0.875rem;
+  width: 100%;
+  background-position: right 0.75rem center !important;
+  background-size: 1rem !important;
+}
+
+select:focus {
+  outline: none !important;
+  border-color: #2c5ea0 !important;
+  box-shadow: 0 0 0 3px rgba(44, 94, 160, 0.15) !important;
+}
+
+select:hover:not(:disabled) {
+  border-color: #8e9eb4;
+}
+
+select:disabled {
+  background-color: #e8eef6 !important;
+  color: #8e9eb4 !important;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+/* Native <input type="date"> / time / month base style */
+input[type="date"],
+input[type="time"],
+input[type="month"],
+input[type="datetime-local"] {
+  background-color: #ffffff;
+  border: 1px solid #b8c6d9;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1e2a3a;
+  width: 100%;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  font-family: inherit;
+}
+
+input[type="date"]:focus,
+input[type="time"]:focus,
+input[type="month"]:focus,
+input[type="datetime-local"]:focus {
+  outline: none;
+  border-color: #2c5ea0;
+  box-shadow: 0 0 0 3px rgba(122, 62, 62, 0.12);
+}
+
+input[type="date"]:hover:not(:disabled),
+input[type="time"]:hover:not(:disabled),
+input[type="month"]:hover:not(:disabled),
+input[type="datetime-local"]:hover:not(:disabled) {
+  border-color: #8e9eb4;
+}
+
+input[type="date"]:disabled,
+input[type="time"]:disabled,
+input[type="month"]:disabled,
+input[type="datetime-local"]:disabled {
+  background-color: #e8eef6;
+  color: #8e9eb4;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+/* Calendar icon style to match warm palette */
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="month"]::-webkit-calendar-picker-indicator,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: opacity(0.5) sepia(0.6);
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 2px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover,
+input[type="time"]::-webkit-calendar-picker-indicator:hover,
+input[type="month"]::-webkit-calendar-picker-indicator:hover,
+input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
+  filter: opacity(0.85) sepia(1) hue-rotate(320deg);
+}
+
+html.dark select,
+html.dark input[type="date"],
+html.dark input[type="time"],
+html.dark input[type="month"],
+html.dark input[type="datetime-local"] {
+  background-color: #131a25 !important;
+  border-color: #283548 !important;
+  color: #c8d6e5 !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237e7364' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") !important;
+}
+
+html.dark select:disabled,
+html.dark input[type="date"]:disabled,
+html.dark input[type="time"]:disabled,
+html.dark input[type="month"]:disabled,
+html.dark input[type="datetime-local"]:disabled {
+  background-color: #1a2332;
+  color: #4a5568;
+}
+
+html.dark select:focus,
+html.dark input[type="date"]:focus,
+html.dark input[type="time"]:focus,
+html.dark input[type="month"]:focus,
+html.dark input[type="datetime-local"]:focus {
+  border-color: #5a8ec4;
+  box-shadow: 0 0 0 3px rgba(158, 90, 90, 0.15);
+}
+
+/* ======================================================
+   PRESCHOOL GLOBAL SKIN-SHIFTING OVERRIDES
+   Tự động ghi đè tất cả màu xanh dương/xanh đen mầm non
+   thành hệ màu vàng hướng dương/kem ấm của mầm non.
+   ====================================================== */
+
+/* Màu chủ đạo: Vàng Hướng Dương / Vàng Mặt Trời */
+.bg-\[\#2c5ea0\] {
+  background-color: #f59e0b !important; /* Amber-500 */
+}
+.text-\[\#2c5ea0\] {
+  color: #d97706 !important; /* Amber-600 */
+}
+.border-\[\#2c5ea0\] {
+  border-color: #f59e0b !important;
+}
+.hover\:bg-\[\#2c5ea0\]:hover,
+.hover\:bg-blue-700:hover {
+  background-color: #d97706 !important;
+}
+.focus\:ring-\[\#2c5ea0\]:focus,
+.focus\:ring-blue-500:focus {
+  --tw-ring-color: #f59e0b !important;
+  border-color: #f59e0b !important;
+}
+
+/* --- GHI ĐÈ TOÀN CỤC CÁC LỚP MÀU XANH DƯƠNG (BLUE) CỦA TAILWIND SANG VÀNG HƯỚNG DƯƠNG/NÂU CACAO --- */
+
+/* Nền màu xanh dương (Nút bấm, nhãn trạng thái chính) */
+[class*="bg-blue-50"] {
+  background-color: #fef3c7 !important; /* Vàng kem nhạt */
+}
+[class*="bg-blue-100"] {
+  background-color: #fde68a !important; /* Vàng nhạt ấm */
+}
+[class*="bg-blue-200"] {
+  background-color: #fcd34d !important; /* Vàng trung bình */
+}
+[class*="bg-blue-500"], [class*="bg-blue-600"] {
+  background-color: #f59e0b !important; /* Vàng Mặt Trời */
+  color: #2d251e !important; /* Chữ nâu cacao tương phản tốt */
+}
+[class*="bg-blue-700"], [class*="bg-blue-800"], [class*="bg-blue-900"] {
+  background-color: #d97706 !important; /* Vàng đậm */
+  color: #fdfbf7 !important; /* Chữ kem sáng */
+}
+
+/* Đảm bảo chữ bên trong các nút xanh dương được chuyển đổi đúng màu tương phản */
+[class*="bg-blue-500"] *, [class*="bg-blue-600"] * {
+  color: #2d251e !important;
+}
+[class*="bg-blue-700"] *, [class*="bg-blue-800"] * {
+  color: #fdfbf7 !important;
+}
+
+/* Chữ màu xanh dương */
+[class*="text-blue-500"] {
+  color: #f59e0b !important;
+}
+[class*="text-blue-600"], [class*="text-blue-700"], [class*="text-blue-800"], [class*="text-blue-900"] {
+  color: #d97706 !important; /* Vàng đất sậm */
+}
+/* Đảm bảo các liên kết/chữ đặc biệt trên nền kem tương phản tốt */
+.prose a[class*="text-blue-"], [class*="text-blue-600"].font-medium {
+  color: #2d251e !important;
+  text-decoration-color: #f59e0b !important;
+}
+
+/* Viền màu xanh dương */
+[class*="border-blue-100"] {
+  border-color: #fde68a !important;
+}
+[class*="border-blue-200"], [class*="border-blue-300"] {
+  border-color: #fcd34d !important;
+}
+[class*="border-blue-500"], [class*="border-blue-600"] {
+  border-color: #f59e0b !important;
+}
+
+/* Hiệu ứng Hover & Focus */
+[class*="hover:bg-blue-600"]:hover, [class*="hover:bg-blue-700"]:hover, [class*="hover:bg-blue-800"]:hover {
+  background-color: #d97706 !important;
+  color: #fdfbf7 !important;
+}
+[class*="hover:text-blue-600"]:hover, [class*="hover:text-blue-700"]:hover {
+  color: #b45309 !important; /* Vàng đất sậm (Amber-700) */
+}
+[class*="focus:ring-blue-"], [class*="focus:border-blue-"] {
+  --tw-ring-color: #f59e0b !important;
+  border-color: #f59e0b !important;
+}
+
+/* --- GHI ĐÈ CÁC MÃ MÀU HEX VIẾT CỨNG CỦA CẤP TIỂU HỌC CŨ SANG TONE MẦM NON --- */
+
+/* 1. Màu xanh dương sẫm trạng thái & nút phụ (bg-[#2e6b8a]) -> Nâu Đất Trầm mầm non */
+.bg-\[\#2e6b8a\] {
+  background-color: #4a3d30 !important; /* Nâu Đất Trầm ấm áp */
+  color: #fdfbf7 !important; /* Chữ kem sáng */
+}
+.hover\:bg-\[\#2e6b8a\]:hover, .hover\:bg-\[\#2e6b8a\/80\]:hover {
+  background-color: #3d3025 !important; /* Nâu cacao ấm */
+  color: #fdfbf7 !important;
+}
+.border-\[\#1e4f6a\] {
+  border-color: #3d3025 !important;
+}
+
+/* 2. Màu xanh đen u ám (bg-[#1e2a3a]) -> Nâu Cacao thẫm sang trọng */
+.bg-\[\#1e2a3a\] {
+  background-color: #2d251e !important; /* Nâu Cacao Thẫm */
+  color: #fdfbf7 !important; /* Chữ kem sáng */
+}
+.hover\:bg-\[\#1e2a3a\]:hover, .hover\:bg-\[\#283548\]:hover {
+  background-color: #4a3d30 !important; /* Nâu đất hover */
+  color: #fdfbf7 !important;
+}
+.border-\[\#131a25\] {
+  border-color: #2d251e !important;
+}
+
+/* 3. Màu xanh dương nhạt bộ lọc (bg-[#a8c4e0]) -> Cát ấm mầm non */
+.bg-\[\#a8c4e0\] {
+  background-color: #f5ede0 !important; /* Warm Sand Tint */
+}
+.hover\:bg-\[\#bdd4ec\]:hover {
+  background-color: #dfdacf !important; /* Sand Accent */
+}
+.border-\[\#7b8a9e\] {
+  border-color: #c2b5a5 !important; /* Cát ấm border */
+}
+.text-\[\#7b8a9e\] {
+  color: #8c7d70 !important; /* Cát trầm muted text */
+}
+
+/* Màu phụ đạo: Xanh Bạc Hà / Xanh Lá Non */
+.bg-emerald-500, .bg-\[\#10b981\] {
+  background-color: #10b981 !important;
+}
+.text-emerald-600, .text-\[\#10b981\] {
+  color: #10b981 !important;
+}
+
+/* Tông nền kem ấm (Neutral Light) */
+.bg-\[\#e8eef6\] {
+  background-color: #fcf8f2 !important; /* Soft Cream */
+}
+.bg-\[\#f5f8fc\] {
+  background-color: #fdfbf7 !important; /* Warm Off-white */
+}
+.bg-\[\#f0f4fa\] {
+  background-color: #f7f2ea !important; /* Soft Sand Tint */
+}
+.bg-\[\#edf2f9\] {
+  background-color: #f5ede0 !important; /* Warm Sand Tint */
+}
+.bg-\[\#d4dde9\] {
+  background-color: #dfdacf !important; /* Sand Accent */
+}
+
+/* Màu chữ ấm áp (Neutral Dark) */
+.text-\[\#1e2a3a\] {
+  color: #2d251e !important; /* Cocoa Brown */
+}
+.text-\[\#4a5568\] {
+  color: #5c4f43 !important; /* Warm Charcoal */
+}
+.text-\[\#7b8a9e\] {
+  color: #8c7d70 !important; /* Warm Muted */
+}
+
+/* Màu đường viền cát ấm (Borders) */
+.border-\[\#b8c6d9\] {
+  border-color: #e7e3d4 !important; /* Soft Sand Border */
+}
+.border-\[\#d4dde9\] {
+  border-color: #dfdacf !important; /* Sand Border */
+}
+.hover\:bg-\[\#f0f4fa\]:hover {
+  background-color: #f7f2ea !important;
+}
+.hover\:bg-\[\#b8c6d9\]:hover {
+  background-color: #e7e3d4 !important;
+}
+
+/* Bo góc & các thành phần UI mầm non tinh nghịch */
+.playful-card {
+  border: 3px double #e7e3d4 !important;
+  border-radius: 1rem !important;
+  background-color: #fdfbf7 !important;
+  box-shadow: 4px 4px 0px #e7e3d4 !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.playful-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #e7e3d4 !important;
+}
+
+.playful-btn {
+  border-radius: 9999px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.025em !important;
+  box-shadow: 2px 2px 0px #dfdacf !important;
+}
+
+/* Custom Scrollbar cho tông ấm */
+::-webkit-scrollbar-track,
+.main-scrollbar::-webkit-scrollbar-track {
+  background: #fcf8f2 !important;
+  border-left: 1px solid #e7e3d4 !important;
+}
+
+::-webkit-scrollbar-thumb,
+.main-scrollbar::-webkit-scrollbar-thumb {
+  background: #dfdacf !important;
+  border-radius: 5px !important;
+  border: 2px solid #fcf8f2 !important;
+}
+
+::-webkit-scrollbar-thumb:hover,
+.main-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #f59e0b !important;
+}

@@ -1,0 +1,36 @@
+type Classroom @table {
+  name: String!
+  capacity: Int!
+  leadTeacher: Staff
+}
+
+type Student @table {
+  firstName: String!
+  lastName: String!
+  dateOfBirth: Date!
+  enrollmentDate: Date!
+  medicalNotes: String
+  classroom: Classroom
+}
+
+type Staff @table {
+  name: String!
+  email: String!
+  role: String!
+  phoneNumber: String
+}
+
+type Attendance @table {
+  date: Date!
+  status: String!
+  student: Student!
+}
+
+type ActivityLog @table {
+  type: String!
+  timestamp: Timestamp!
+  description: String!
+  imageUrl: String
+  student: Student!
+  staff: Staff!
+}

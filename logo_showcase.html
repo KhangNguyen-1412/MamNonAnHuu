@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thiết kế Logo | Trường Tiểu học An Hữu</title>
+  
+  <!-- Google Fonts: Inter & Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --- CSS DESIGN SYSTEM & TOKENS --- */
+    :root {
+      --bg-dark: #0b0f19;
+      --card-bg-dark: #111827;
+      --border-dark: #1f2937;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      
+      --primary: #10b981; /* Emerald Green - Mầm non */
+      --primary-dark: #047857;
+      --accent: #fbbf24; /* Solar Gold */
+      --accent-dark: #d97706;
+      
+      --font-sans: 'Inter', sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.6;
+      overflow-x: hidden;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    /* --- HEADER --- */
+    header {
+      text-align: center;
+      border-bottom: 2px double var(--border-dark);
+      padding-bottom: 2rem;
+    }
+
+    header h1 {
+      font-family: var(--font-serif);
+      font-size: 2.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #10b981 0%, #fbbf24 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-weight: 600;
+    }
+
+    /* --- MAIN SHOWCASE GRID --- */
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    @media (min-width: 900px) {
+      .showcase-grid {
+        grid-template-columns: 1.1fr 0.9fr;
+      }
+    }
+
+    /* --- LEFT COLUMN: LOGO VIEWER --- */
+    .logo-viewer-card {
+      background-color: var(--card-bg-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 2rem;
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      transition: all 0.5s ease;
+      min-height: 500px;
+    }
+
+    /* Interactive Background Themes for Logo */
+    .logo-viewer-card.theme-dark {
+      background-color: #0b0f19;
+      border-color: #1f2937;
+    }
+    .logo-viewer-card.theme-light {
+      background-color: #f8fafc;
+      border-color: #e2e8f0;
+      color: #0f172a;
+    }
+    .logo-viewer-card.theme-cream {
+      background-color: #fdf6e2;
+      border-color: #e7d8b1;
+      color: #433422;
+    }
+    .logo-viewer-card.theme-navy {
+      background-color: #0c1b33;
+      border-color: #1a365d;
+    }
+
+    .logo-container {
+      width: 320px;
+      height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-container:hover {
+      transform: scale(1.03);
+    }
+
+    /* --- VIEWER CONTROLS --- */
+    .viewer-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2.5rem;
+      width: 100%;
+      justify-content: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 1.5rem;
+    }
+
+    .logo-viewer-card.theme-light .viewer-controls {
+      border-top-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .btn {
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+      padding: 0.6rem 1.2rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .logo-viewer-card.theme-light .btn {
+      background-color: rgba(0, 0, 0, 0.03);
+      border-color: rgba(0, 0, 0, 0.1);
+      color: #0f172a;
+    }
+
+    .btn:hover {
+      background-color: var(--primary);
+      border-color: var(--primary-dark);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .btn.active {
+      background-color: var(--primary);
+      border-color: var(--primary-dark);
+      color: white;
+    }
+
+    .theme-picker {
+      display: flex;
+      gap: 0.5rem;
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 0.3rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .logo-viewer-card.theme-light .theme-picker {
+      background-color: rgba(0, 0, 0, 0.05);
+      border-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .theme-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .theme-dot:hover {
+      transform: scale(1.15);
+    }
+
+    .theme-dot.active {
+      border-color: var(--primary);
+      transform: scale(1.1);
+    }
+
+    /* --- RIGHT COLUMN: DESIGN INFO & EXPLANATION --- */
+    .info-column {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .card {
+      background-color: var(--card-bg-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 2rem;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .card h2 {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      margin-bottom: 1.2rem;
+      border-bottom: 1px solid var(--border-dark);
+      padding-bottom: 0.5rem;
+      color: var(--accent);
+    }
+
+    /* Symbolism List */
+    .symbol-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .symbol-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      cursor: pointer;
+      padding: 0.8rem;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .symbol-item:hover, .symbol-item.active {
+      background-color: rgba(16, 185, 129, 0.08);
+      border-left: 4px solid var(--primary);
+      transform: translateX(4px);
+    }
+
+    .symbol-icon {
+      font-size: 1.5rem;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.03);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .symbol-item:hover .symbol-icon, .symbol-item.active .symbol-icon {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .symbol-details h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+      color: var(--text-main);
+    }
+
+    .symbol-details p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* --- SIDE-BY-SIDE COMPARISON SECTION --- */
+    .comparison-section {
+      background-color: var(--card-bg-dark);
+      border: 1px solid var(--border-dark);
+      border-radius: 2.5rem;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .comparison-section h2 {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      color: var(--text-main);
+    }
+
+    .comparison-section p.subtitle {
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      font-size: 0.95rem;
+    }
+
+    .comparison-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    @media (min-width: 768px) {
+      .comparison-container {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .comparison-card {
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-dark);
+      border-radius: 2rem;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      position: relative;
+    }
+
+    .comparison-card.primary-school {
+      border-color: rgba(16, 185, 129, 0.3);
+      box-shadow: 0 0 25px rgba(16, 185, 129, 0.05);
+    }
+
+    .comparison-card.high-school {
+      border-color: rgba(44, 94, 160, 0.3);
+      box-shadow: 0 0 25px rgba(44, 94, 160, 0.05);
+    }
+
+    .comparison-logo-box {
+      width: 150px;
+      height: 150px;
+    }
+
+    .comparison-card h3 {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+    }
+
+    .comparison-card.primary-school h3 {
+      color: var(--primary);
+    }
+
+    .comparison-card.high-school h3 {
+      color: #2c5ea0;
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      text-align: left;
+    }
+
+    .comparison-table th, .comparison-table td {
+      padding: 0.8rem 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .comparison-table th {
+      color: var(--text-muted);
+      font-weight: 700;
+      width: 35%;
+    }
+
+    .comparison-table td {
+      color: var(--text-main);
+    }
+
+    /* --- FOOTER --- */
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--border-dark);
+    }
+
+    /* --- SVG ANIMATIONS --- */
+    @keyframes spinRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes pulseCore {
+      0%, 100% { transform: scale(0.97); opacity: 0.95; }
+      50% { transform: scale(1.03); opacity: 1; }
+    }
+    @keyframes waveOscillate {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(1.5px); }
+    }
+    @keyframes kiteSway {
+      0% { transform: translate(55px, 29px) rotate(0deg); }
+      50% { transform: translate(57px, 27px) rotate(4deg); }
+      100% { transform: translate(53px, 30px) rotate(-3deg); }
+    }
+    @keyframes leafGrow {
+      0%, 100% { transform: translate(50px, 45px) scale(0.25) rotate(-1deg); }
+      50% { transform: translate(50px, 45px) scale(0.26) rotate(1deg); }
+    }
+
+    .rotator {
+      transform-origin: center;
+      animation: spinRing 28s linear infinite;
+    }
+    
+    .logo-pulse {
+      transform-origin: center;
+      animation: pulseCore 3s ease-in-out infinite alternate;
+    }
+    
+    .logo-wave {
+      animation: waveOscillate 3s ease-in-out infinite alternate;
+    }
+
+    .kite-anim {
+      transform-origin: 50px 33px;
+      animation: kiteSway 4s ease-in-out infinite alternate;
+    }
+
+    .leaf-anim {
+      transform-origin: 50px 48px;
+      animation: leafGrow 3.5s ease-in-out infinite alternate;
+    }
+
+    /* Class to pause animations */
+    .paused-anim .rotator,
+    .paused-anim .logo-pulse,
+    .paused-anim .logo-wave,
+    .paused-anim .kite-anim,
+    .paused-anim .leaf-anim {
+      animation-play-state: paused !important;
+    }
+
+    /* Interactive highlights */
+    .highlightable {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .highlightable:hover, .highlighted-svg-part {
+      filter: drop-shadow(0 0 8px var(--primary));
+      stroke-width: 1.5px !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Header -->
+    <header>
+      <h1>TIỂU HỌC AN HỮU</h1>
+      <p>Hồ sơ Thiết kế & Bản vẽ Kỹ thuật Vector Logo</p>
+    </header>
+
+    <!-- Main Showcase Grid -->
+    <div class="showcase-grid">
+      
+      <!-- Left Column: Logo Card -->
+      <div class="logo-viewer-card theme-dark" id="logoCard">
+        
+        <div class="logo-container" id="logoContainer">
+          <!-- Primary School SVG Logo -->
+          <svg id="primarySchoolLogo" viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <!-- Bright emerald gradient representing young growth -->
+              <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#34d399" />
+                <stop offset="50%" stop-color="#10b981" />
+                <stop offset="100%" stop-color="#047857" />
+              </linearGradient>
+
+              <!-- Bright solar gold gradient representing bright future -->
+              <linearGradient id="solarGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fef08a" />
+                <stop offset="50%" stop-color="#fbbf24" />
+                <stop offset="100%" stop-color="#d97706" />
+              </linearGradient>
+
+              <!-- Soft sky blue / teal gradient for water waves -->
+              <linearGradient id="skyTealGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.1" />
+                <stop offset="50%" stop-color="#22d3ee" stop-opacity="0.8" />
+                <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.1" />
+              </linearGradient>
+
+              <!-- Shield background: rich deep forest green -->
+              <linearGradient id="shieldBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#064e3b" />
+                <stop offset="100%" stop-color="#022c22" />
+              </linearGradient>
+
+              <!-- Central Radial Glow -->
+              <radialGradient id="radialGlow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#10b981" stop-opacity="0.25" />
+                <stop offset="100%" stop-color="#0b0f19" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+
+            <!-- Outer Back Glow -->
+            <circle cx="50" cy="50" r="42" fill="url(#radialGlow)" pointer-events="none" />
+
+            <!-- Segmented Spinning Ring (Symbolizes time, continuity & Vietnamese heritage) -->
+            <g class="rotator highlightable" data-target="ring">
+              <circle cx="50" cy="50" r="45" stroke="url(#solarGoldGrad)" stroke-width="0.75" stroke-dasharray="6 4" fill="none" opacity="0.7" />
+              <circle cx="50" cy="50" r="42.5" stroke="url(#solarGoldGrad)" stroke-width="1.25" fill="none" />
+              <circle cx="50" cy="50" r="40.5" stroke="url(#solarGoldGrad)" stroke-width="0.4" fill="none" opacity="0.3" />
+              
+              <!-- Ray segments matching ancient Dong Son motif -->
+              <g stroke="url(#solarGoldGrad)" stroke-width="0.75" opacity="0.8">
+                <path d="M50 4.5 L50 6.5" />
+                <path d="M50 93.5 L50 95.5" />
+                <path d="M4.5 50 L6.5 50" />
+                <path d="M93.5 50 L95.5 50" />
+              </g>
+            </g>
+
+            <!-- Inner border frame -->
+            <circle cx="50" cy="50" r="36.5" stroke="#065f46" stroke-width="0.75" fill="none" />
+            <circle cx="50" cy="50" r="35" stroke="url(#solarGoldGrad)" stroke-width="0.5" fill="none" opacity="0.15" />
+
+            <!-- Typography curving paths -->
+            <path id="primaryTextPathTop" d="M 18,50 A 32,32 0 0,1 82,50" fill="none" />
+            <path id="primaryTextPathBottom" d="M 82,50 A 32,32 0 0,1 18,50" fill="none" />
+
+            <!-- Text elements -->
+            <text fill="url(#solarGoldGrad)" font-family="'Inter', sans-serif" font-size="3.1" font-weight="800" letter-spacing="0.08em" opacity="0.95">
+              <textPath href="#primaryTextPathTop" startOffset="50%" text-anchor="middle">TRƯỜNG TIỂU HỌC AN HỮU</textPath>
+            </text>
+            <text fill="#a7f3d0" font-family="'Inter', sans-serif" font-size="2.6" font-weight="700" letter-spacing="0.06em" opacity="0.8">
+              <textPath href="#primaryTextPathBottom" startOffset="50%" text-anchor="middle">CÁI BÈ - TIỀN GIANG</textPath>
+            </text>
+
+            <!-- Main Shield & Inner motifs -->
+            <g class="logo-pulse">
+              
+              <!-- Shield Base (Symbolizes security, solid foundation, and tradition) -->
+              <path class="highlightable" data-target="shield"
+                d="M 50 26.5 
+                   C 57 26.5, 62.8 28.7, 65.5 32.2 
+                   C 65.5 46.2, 60.3 58.2, 50 64 
+                   C 39.7 58.2, 34.5 46.2, 34.5 32.2 
+                   C 37.2 28.7, 43 26.5, 50 26.5 Z" 
+                fill="url(#shieldBgGrad)" 
+                stroke="url(#solarGoldGrad)" 
+                stroke-width="1" 
+              />
+
+              <!-- Star Core (8-pointed star representing wisdom & future orientation) -->
+              <g class="highlightable" data-target="star" transform="translate(50, 34.5) scale(0.21)" stroke="url(#solarGoldGrad)" stroke-width="1.5" stroke-linejoin="round">
+                <path d="M0 -30 L8 -10 L28 -28 L10 -8 L30 0 L10 8 L28 28 L8 10 L0 30 L-8 10 L-28 28 L-10 8 L-30 0 L-10 -8 L-28 -28 L-8 -10 Z" fill="#047857" />
+                <circle cx="0" cy="0" r="4.5" fill="#34d399" />
+              </g>
+
+              <!-- Open Book (Symbol of knowledge, growth & education) -->
+              <g class="highlightable" data-target="book" transform="translate(50, 48.5) scale(0.28)">
+                <path d="M-40 0 C-20 -8 -5 -4 0 4 C5 -4 20 -8 40 0 L40 22 C20 14 5 18 0 26 C-5 18 -20 14 -40 22 Z" fill="#ffffff" stroke="url(#solarGoldGrad)" stroke-width="0.75" />
+                <path d="M0 4 L0 26" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" />
+                <!-- Book page lines -->
+                <path d="M-34 5 C-20 -1 -8 2 -2 7 M-34 10 C-20 4 -8 7 -2 12" stroke="#34d399" stroke-width="1" stroke-linecap="round" opacity="0.7" />
+                <path d="M34 5 C20 -1 8 2 2 7 M34 10 C20 4 8 7 2 12" stroke="#34d399" stroke-width="1" stroke-linecap="round" opacity="0.7" />
+              </g>
+
+              <!-- Dynamic Sprout "Mầm non" (Vibrant green leaf growing representing Primary School) -->
+              <g class="leaf-anim highlightable" data-target="sprout" transform="translate(50, 45) scale(0.25)">
+                <!-- Left Leaf -->
+                <path d="M0 0 C-12 -12 -18 -4 -10 10 C-3 6 -1 2 0 0 Z" fill="url(#emeraldGrad)" opacity="0.95" />
+                <!-- Right Leaf -->
+                <path d="M0 0 C12 -12 18 -4 10 10 C3 6 1 2 0 0 Z" fill="url(#solarGoldGrad)" opacity="0.9" />
+                <!-- Main stem -->
+                <path d="M0 15 L0 -2" stroke="url(#solarGoldGrad)" stroke-width="2.5" stroke-linecap="round" />
+              </g>
+
+              <!-- Soaring Kite "Cánh diều ước mơ" (Primary school dreams flying high towards the star) -->
+              <g class="kite-anim highlightable" data-target="kite" transform="translate(55, 29) scale(0.13)" stroke="url(#solarGoldGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Kite frame/body -->
+                <path d="M 0 -20 L 15 0 L 0 20 L -15 0 Z" fill="url(#emeraldGrad)" />
+                <line x1="0" y1="-20" x2="0" y2="20" stroke="url(#solarGoldGrad)" stroke-width="2.5" />
+                <line x1="-15" y1="0" x2="15" y2="0" stroke="url(#solarGoldGrad)" stroke-width="2.5" />
+                <!-- Ribbon tails representing playful primary school vibes -->
+                <path d="M 0 20 C 5 28, -5 34, 0 42" stroke="url(#solarGoldGrad)" stroke-width="2" fill="none" />
+                <path d="M -15 0 C -20 8, -16 16, -20 22" stroke="url(#solarGoldGrad)" stroke-width="1" fill="none" opacity="0.8" />
+                <path d="M 15 0 C 20 8, 16 16, 20 22" stroke="url(#solarGoldGrad)" stroke-width="1" fill="none" opacity="0.8" />
+              </g>
+
+              <!-- Water Waves (Local geographic Cai Be, Tien Giang river reference) -->
+              <g class="logo-wave highlightable" data-target="waves" transform="translate(50, 58.5)">
+                <path d="M-12 0 C-6 -1.5 -6 1.5 0 0 C6 -1.5 6 1.5 12 0" stroke="url(#skyTealGrad)" stroke-width="1.2" stroke-linecap="round" fill="none" />
+                <path d="M-9 2 C-4.5 1 -4.5 3 0 2 C4.5 1 4.5 3 9 2" stroke="url(#skyTealGrad)" stroke-width="0.6" stroke-linecap="round" fill="none" opacity="0.6" />
+              </g>
+            </g>
+
+            <!-- Monogram "AH" (An Hữu) -->
+            <text x="50" y="73.5" font-family="'Playfair Display', Georgia, serif" font-size="6.8" font-weight="800" fill="url(#solarGoldGrad)" text-anchor="middle" font-style="italic" letter-spacing="0.02em">AH</text>
+            <line x1="42.5" y1="76" x2="57.5" y2="76" stroke="url(#solarGoldGrad)" stroke-width="0.5" opacity="0.7" />
+            <!-- Active emerald green dot under monogram -->
+            <circle cx="50" cy="76" r="0.8" fill="#10b981" />
+          </svg>
+        </div>
+
+        <!-- Viewer Controls -->
+        <div class="viewer-controls">
+          <button class="btn active" id="btnAnim" onclick="toggleAnimation()">
+            <span>⏸ Tạm dừng</span>
+          </button>
+          <button class="btn" id="btnExport" onclick="exportSVG()">
+            <span>💾 Sao chép SVG</span>
+          </button>
+          <div class="theme-picker">
+            <div class="theme-dot theme-dark active" onclick="setViewerTheme('dark', this)" title="Tông tối hiện đại"></div>
+            <div class="theme-dot theme-light" style="background-color: #f8fafc;" onclick="setViewerTheme('light', this)" title="Tông sáng sạch sẽ"></div>
+            <div class="theme-dot theme-cream" style="background-color: #fdf6e2;" onclick="setViewerTheme('cream', this)" title="Tông kem hoài cổ"></div>
+            <div class="theme-dot theme-navy" style="background-color: #0c1b33;" onclick="setViewerTheme('navy', this)" title="Tông xanh đồng phục"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Symbolism Info -->
+      <div class="info-column">
+        
+        <div class="card">
+          <h2>Ý Nghĩa Biểu Tượng</h2>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">
+            Rê chuột vào hình vẽ logo hoặc danh sách dưới đây để khám phá các thông điệp giáo dục được tích hợp tinh tế trong logo Tiểu học An Hữu.
+          </p>
+          
+          <div class="symbol-list">
+            
+            <div class="symbol-item" data-part="sprout" onmouseenter="highlightPart('sprout')" onmouseleave="clearHighlight()">
+              <div class="symbol-icon" style="color: #10b981;">🌱</div>
+              <div class="symbol-details">
+                <h4>Mầm Non Tương Lai</h4>
+                <p>Nhánh mầm xanh hai lá vươn lên từ trang sách tượng trưng cho học sinh tiểu học – thế hệ mầm non đang đâm chồi nảy lộc, tràn đầy sức sống và hy vọng.</p>
+              </div>
+            </div>
+
+            <div class="symbol-item" data-part="kite" onmouseenter="highlightPart('kite')" onmouseleave="clearHighlight()">
+              <div class="symbol-icon" style="color: #fbbf24;">🪁</div>
+              <div class="symbol-details">
+                <h4>Cánh Diều Ước Mơ</h4>
+                <p>Cánh diều tuổi thơ bay lượn tượng trưng cho ước mơ hồn nhiên, khát vọng vươn cao và bay xa của các em trong những năm đầu đời dưới mái trường.</p>
+              </div>
+            </div>
+
+            <div class="symbol-item" data-part="book" onmouseenter="highlightPart('book')" onmouseleave="clearHighlight()">
+              <div class="symbol-icon" style="color: #ffffff;">📖</div>
+              <div class="symbol-details">
+                <h4>Trang Sách Tri Thức</h4>
+                <p>Quyển sách mở rộng làm bệ đỡ chắc chắn cho mầm xanh, khẳng định tri thức và giáo dục là nền tảng cốt lõi nâng cánh tương lai các em.</p>
+              </div>
+            </div>
+
+            <div class="symbol-item" data-part="shield" onmouseenter="highlightPart('shield')" onmouseleave="clearHighlight()">
+              <div class="symbol-icon" style="color: #059669;">🛡️</div>
+              <div class="symbol-details">
+                <h4>Lá Chắn Bảo Vệ</h4>
+                <p>Hình ảnh chiếc khiên kiên cố màu xanh rừng thẳm tượng trưng cho môi trường sư phạm an toàn, tràn đầy tình yêu thương, chở che và nuôi dưỡng mầm non.</p>
+              </div>
+            </div>
+
+            <div class="symbol-item" data-part="star" onmouseenter="highlightPart('star')" onmouseleave="clearHighlight()">
+              <div class="symbol-icon" style="color: #fbbf24;">⭐</div>
+              <div class="symbol-details">
+                <h4>Ngôi Sao Trí Tuệ</h4>
+                <p>Ngôi sao vàng 8 cánh tỏa sáng ở đỉnh khiên dẫn đường cho học vấn, khai sáng trí tuệ và định hướng tương lai tươi sáng cho học sinh.</p>
+              </div>
+            </div>
+
+            <div class="symbol-item" data-part="waves" onmouseenter="highlightPart('waves')" onmouseleave="clearHighlight()">
+              <div class="symbol-icon" style="color: #06b6d4;">🌊</div>
+              <div class="symbol-details">
+                <h4>Sông Nước Cái Bè</h4>
+                <p>Những làn sóng nước mềm mại đại diện cho địa hình sông nước Cái Bè - Tiền Giang trù phú, nhắc nhở các em về cội nguồn quê hương sông nước dồi dào.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Side-by-Side Comparison Section -->
+    <div class="comparison-section">
+      <h2>So Sánh Hệ Thống Logo An Hữu</h2>
+      <p class="subtitle">
+        Bảng đối chiếu sự đồng bộ và những điểm cải tiến độc lập của logo cấp Tiểu học so với logo cấp THPT của trường An Hữu.
+      </p>
+
+      <div class="comparison-container">
+        
+        <!-- High School Card -->
+        <div class="comparison-card high-school">
+          <div class="comparison-logo-box">
+            <!-- Simplified THPT Logo preview using high school style -->
+            <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="goldHs" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#a8c4e0" />
+                  <stop offset="100%" stop-color="#b89f74" />
+                </linearGradient>
+                <linearGradient id="shieldHs" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#1b1917" />
+                  <stop offset="100%" stop-color="#0f0e0d" />
+                </linearGradient>
+              </defs>
+              <circle cx="50" cy="50" r="45" stroke="url(#goldHs)" stroke-width="1" stroke-dasharray="4 2" fill="none" opacity="0.6" />
+              <circle cx="50" cy="50" r="42.5" stroke="url(#goldHs)" stroke-width="1.5" fill="none" />
+              <path d="M 18,50 A 32,32 0 0,1 82,50" id="hsPath" fill="none" />
+              <text fill="url(#goldHs)" font-size="3" font-weight="bold" letter-spacing="0.05em">
+                <textPath href="#hsPath" startOffset="50%" text-anchor="middle">TRƯỜNG THPT AN HỮU</textPath>
+              </text>
+              <path d="M 50 26.5 C 57 26.5, 62.8 28.7, 65.5 32.2 C 65.5 46.2, 60.3 58.2, 50 64 C 39.7 58.2, 34.5 46.2, 34.5 32.2 C 37.2 28.7, 43 26.5, 50 26.5 Z" fill="url(#shieldHs)" stroke="url(#goldHs)" stroke-width="1" />
+              <g transform="translate(50, 34.5) scale(0.2)" stroke="url(#goldHs)" stroke-width="1.5" fill="#153460">
+                <path d="M0 -30 L8 -10 L28 -28 L10 -8 L30 0 L10 8 L28 28 L8 10 L0 30 L-8 10 L-28 28 L-10 8 L-30 0 L-10 -8 L-28 -28 L-8 -10 Z" />
+              </g>
+              <g transform="translate(50, 48.5) scale(0.28)" fill="#f5f8fc" stroke="url(#goldHs)" stroke-width="0.75">
+                <path d="M-40 0 C-20 -8 -5 -4 0 4 C5 -4 20 -8 40 0 L40 22 C20 14 5 18 0 26 C-5 18 -20 14 -40 22 Z" />
+              </g>
+              <!-- Soaring Crane (Chim hạc bay cao representing High School) -->
+              <g transform="translate(50, 37.5) scale(0.25)" stroke="url(#goldHs)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M0 15 C-15 8 -24 -2 -22 -12 C-14 -10 -4 0 0 15 Z" fill="#153460" />
+                <path d="M0 15 C15 8 24 -2 22 -12 C14 -10 4 0 0 15 Z" fill="url(#goldHs)" />
+                <line x1="0" y1="20" x2="0" y2="-12" stroke="url(#goldHs)" stroke-width="3" />
+              </g>
+              <text x="50" y="73.5" font-family="serif" font-size="6.8" font-weight="bold" fill="url(#goldHs)" text-anchor="middle" font-style="italic">AH</text>
+              <circle cx="50" cy="76" r="0.8" fill="#153460" />
+            </svg>
+          </div>
+          <h3>THPT An Hữu (Cấp 3)</h3>
+          
+          <table class="comparison-table">
+            <tr>
+              <th>Tông màu chính</th>
+              <td>Đỏ sẫm cổ kính, Xanh dương đậm, Vàng đồng hoài cổ (Truyền thống, Trang trọng, Uy nghiêm)</td>
+            </tr>
+            <tr>
+              <th>Biểu tượng tâm</th>
+              <td><strong>Chim Hạc Vàng bay cao (Soaring Crane)</strong> – thể hiện ý chí vươn lên vượt bậc, khát vọng lập thân lập nghiệp lớn của học sinh cấp 3.</td>
+            </tr>
+            <tr>
+              <th>Chi tiết khiên</th>
+              <td>Khiên nền đen xám tối giản làm nổi bật cánh chim vàng kiêu hãnh.</td>
+            </tr>
+            <tr>
+              <th>Phong cách chữ</th>
+              <td>Cổ điển, khoảng cách rộng, hướng tới học thuật chuyên sâu.</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Primary School Card -->
+        <div class="comparison-card primary-school">
+          <div class="comparison-logo-box">
+            <!-- Simplified Primary Logo preview using our new style -->
+            <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="goldPs" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#fef08a" />
+                  <stop offset="100%" stop-color="#d97706" />
+                </linearGradient>
+                <linearGradient id="shieldPs" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#064e3b" />
+                  <stop offset="100%" stop-color="#022c22" />
+                </linearGradient>
+              </defs>
+              <circle cx="50" cy="50" r="45" stroke="url(#goldPs)" stroke-width="1" stroke-dasharray="4 2" fill="none" opacity="0.6" />
+              <circle cx="50" cy="50" r="42.5" stroke="url(#goldPs)" stroke-width="1.5" fill="none" />
+              <path d="M 18,50 A 32,32 0 0,1 82,50" id="psPath" fill="none" />
+              <text fill="url(#goldPs)" font-size="3" font-weight="bold" letter-spacing="0.05em">
+                <textPath href="#psPath" startOffset="50%" text-anchor="middle">TRƯỜNG TIỂU HỌC AN HỮU</textPath>
+              </text>
+              <path d="M 50 26.5 C 57 26.5, 62.8 28.7, 65.5 32.2 C 65.5 46.2, 60.3 58.2, 50 64 C 39.7 58.2, 34.5 46.2, 34.5 32.2 C 37.2 28.7, 43 26.5, 50 26.5 Z" fill="url(#shieldPs)" stroke="url(#goldPs)" stroke-width="1" />
+              <g transform="translate(50, 34.5) scale(0.2)" stroke="url(#goldPs)" stroke-width="1.5" fill="#047857">
+                <path d="M0 -30 L8 -10 L28 -28 L10 -8 L30 0 L10 8 L28 28 L8 10 L0 30 L-8 10 L-28 28 L-10 8 L-30 0 L-10 -8 L-28 -28 L-8 -10 Z" />
+              </g>
+              <g transform="translate(50, 48.5) scale(0.28)" fill="#ffffff" stroke="url(#goldPs)" stroke-width="0.75">
+                <path d="M-40 0 C-20 -8 -5 -4 0 4 C5 -4 20 -8 40 0 L40 22 C20 14 5 18 0 26 C-5 18 -20 14 -40 22 Z" />
+              </g>
+              <!-- Leaf sprout -->
+              <g transform="translate(50, 45) scale(0.22)" fill="#10b981">
+                <path d="M0 0 C-12 -12 -18 -4 -10 10 C-3 6 -1 2 0 0 Z" />
+                <path d="M0 0 C12 -12 18 -4 10 10 C3 6 1 2 0 0 Z" fill="url(#goldPs)" />
+              </g>
+              <!-- Kite -->
+              <g transform="translate(55, 29) scale(0.12)" stroke="url(#goldPs)" stroke-width="2.5" fill="#10b981">
+                <path d="M 0 -20 L 15 0 L 0 20 L -15 0 Z" />
+              </g>
+              <text x="50" y="73.5" font-family="serif" font-size="6.8" font-weight="bold" fill="url(#goldPs)" text-anchor="middle" font-style="italic">AH</text>
+              <circle cx="50" cy="76" r="0.8" fill="#10b981" />
+            </svg>
+          </div>
+          <h3>Tiểu Học An Hữu (Cấp 1)</h3>
+          
+          <table class="comparison-table">
+            <tr>
+              <th>Tông màu chính</th>
+              <td><strong>Xanh ngọc lục bảo (Emerald)</strong>, Vàng mặt trời rực rỡ, Xanh ngọc lam nước (Năng động, Tươi mát, Thân thiện, Sinh trưởng)</td>
+            </tr>
+            <tr>
+              <th>Biểu tượng tâm</th>
+              <td><strong>Mầm Non Cây Xanh (Sprout) & Cánh Diều (Kite)</strong> – biểu trưng cho tuổi thơ hồn nhiên, thế hệ mầm non tương lai đang lớn khôn và gieo mầm ước mơ.</td>
+            </tr>
+            <tr>
+              <th>Chi tiết khiên</th>
+              <td>Nền khiên màu xanh rừng thẳm ấm áp, gợi cảm giác chở che, chăm sóc chu đáo của nhà trường và gia đình.</td>
+            </tr>
+            <tr>
+              <th>Phong cách chữ</th>
+              <td>Hiện đại, bo góc nhẹ nhàng, đậm nét, dễ đọc, phù hợp với lứa tuổi tiểu học.</td>
+            </tr>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2026 Trường Tiểu học An Hữu. Thiết kế phát triển bởi Antigravity AI.</p>
+    </footer>
+
+  </div>
+
+  <!-- --- JAVASCRIPT LOGIC --- -->
+  <script>
+    const logoCard = document.getElementById('logoCard');
+    const logoContainer = document.getElementById('logoContainer');
+    const btnAnim = document.getElementById('btnAnim');
+
+    // Toggle animations play-state
+    function toggleAnimation() {
+      if (logoCard.classList.contains('paused-anim')) {
+        logoCard.classList.remove('paused-anim');
+        btnAnim.innerHTML = '<span>⏸ Tạm dừng</span>';
+        btnAnim.classList.add('active');
+      } else {
+        logoCard.classList.add('paused-anim');
+        btnAnim.innerHTML = '<span>▶ Chạy hoạt ảnh</span>';
+        btnAnim.classList.remove('active');
+      }
+    }
+
+    // Toggle background themes for logo card preview
+    function setViewerTheme(theme, element) {
+      // Clear previous theme classes
+      logoCard.className = 'logo-viewer-card';
+      
+      // Add new theme class
+      logoCard.classList.add('theme-' + theme);
+      
+      // Highlight active dot
+      const dots = document.querySelectorAll('.theme-dot');
+      dots.forEach(d => d.classList.remove('active'));
+      element.classList.add('active');
+    }
+
+    // Copy SVG Code to Clipboard for immediate production use
+    function exportSVG() {
+      const svgElement = document.getElementById('primarySchoolLogo');
+      const svgString = new XMLSerializer().serializeToString(svgElement);
+      
+      navigator.clipboard.writeText(svgString).then(() => {
+        const btnText = document.querySelector('#btnExport span');
+        const originalText = btnText.textContent;
+        btnText.textContent = '✅ Đã sao chép!';
+        setTimeout(() => {
+          btnText.textContent = originalText;
+        }, 2000);
+      }).catch(err => {
+        alert('Không thể sao chép mã SVG. Vui lòng thử lại.');
+      });
+    }
+
+    // Interactive Symbol Highlight
+    function highlightPart(partId) {
+      // Clear previous highlights
+      clearHighlight();
+
+      // Find SVG elements matching data-target
+      const svgParts = document.querySelectorAll(`[data-target="${partId}"]`);
+      svgParts.forEach(part => {
+        part.classList.add('highlighted-svg-part');
+      });
+
+      // Highlight corresponding list item
+      const listItem = document.querySelector(`.symbol-item[data-part="${partId}"]`);
+      if (listItem) {
+        listItem.classList.add('active');
+      }
+    }
+
+    function clearHighlight() {
+      const allParts = document.querySelectorAll('.highlighted-svg-part');
+      allParts.forEach(p => p.classList.remove('highlighted-svg-part'));
+
+      const allItems = document.querySelectorAll('.symbol-item');
+      allItems.forEach(i => i.classList.remove('active'));
+    }
+
+    // Hook up SVG element hover events to list highlight
+    document.querySelectorAll('.highlightable').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        const target = el.getAttribute('data-target');
+        highlightPart(target);
+      });
+      el.addEventListener('mouseleave', () => {
+        clearHighlight();
+      });
+    });
+  </script>
+</body>
+</html>

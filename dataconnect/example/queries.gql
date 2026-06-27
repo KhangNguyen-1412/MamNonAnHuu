@@ -1,0 +1,30 @@
+query GetClassroomStudents($id: UUID!) @auth(level: USER) {
+  classroom(id: $id) {
+    name
+    students_on_classroom {
+      firstName
+      lastName
+      dateOfBirth
+    }
+  }
+}
+
+query GetRecentActivityLogs @auth(level: USER) {
+  activityLogs(orderBy: [{timestamp: DESC}], limit: 50) {
+    type
+    timestamp
+    description
+    student {
+      firstName
+      lastName
+    }
+  }
+}
+
+mutation CreateStaffMember($data: Staff_Data!) @auth(expr: "auth.token.admin == true") {
+  staff_insert(data: $data)
+}
+
+mutation UpdateStudentMedicalNotes($id: UUID!, $notes: String!) @auth(level: USER) {
+  student_update(id: $id, data: {medicalNotes: $notes})
+}
