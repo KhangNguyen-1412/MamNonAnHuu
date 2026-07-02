@@ -5,7 +5,7 @@ import {
   Cpu, Globe, Lock, Phone, Mail, MapPin, ChevronRight,
   GraduationCap, Building2, ClipboardList, Activity, TrendingUp,
   Play, X, Menu, Target, Compass, Newspaper, Check, Info, FileSpreadsheet,
-  Calculator, Atom, Palette, Briefcase, Sun, Moon
+  Calculator, Atom, Palette, Briefcase, Sun, Moon, User, UserCheck
 } from 'lucide-react';
 import SystemLogo from '../ui/SystemLogo';
 import { getStaffList, Staff } from '../../services/hrService';
@@ -256,6 +256,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterSystem }) => {
   const [videoModal, setVideoModal] = useState(false);
   const [activePage, setActivePage] = useState<SubPage>('home');
   const [selectedDeptId, setSelectedDeptId] = useState<string | null>(null);
+  const [activeDeptFilter, setActiveDeptFilter] = useState<'all' | 'pedagogy' | 'operational'>('all');
 
   useEffect(() => {
     const pageTitleMap: Record<SubPage, string> = {
@@ -1740,6 +1741,143 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterSystem }) => {
       return renderDepartmentDetail(selectedDeptId);
     }
 
+    const gradeLevelDepts = departmentsData.filter(
+      dept => dept.type === 'Tổ khối lớp' || dept.name.toLowerCase().includes('khối')
+    );
+    const specializedDepts = departmentsData.filter(
+      dept => dept.type === 'Tổ chuyên biệt' || (!dept.type && !dept.name.toLowerCase().includes('khối'))
+    );
+
+    const filteredDepts = departmentsData.filter(dept => {
+      const isPedagogy = dept.type === 'Tổ khối lớp' || dept.name.toLowerCase().includes('khối');
+      if (activeDeptFilter === 'pedagogy') return isPedagogy;
+      if (activeDeptFilter === 'operational') return !isPedagogy;
+      return true; // 'all'
+    });
+
+    const renderDeptCard = (dept: Department) => {
+      const LogoIcon = getDepartmentIcon(dept.logo);
+      const isPedagogy = dept.type === 'Tổ khối lớp' || dept.name.toLowerCase().includes('khối');
+      
+      const head = dept.members.find(m => m.role === 'head');
+      const deputy = dept.members.find(m => m.role === 'deputy');
+      const memberCount = dept.members.filter(m => m.role === 'member').length;
+      
+      const lowerName = dept.name.toLowerCase();
+      
+      let themeColor = '#f59e0b'; // Amber
+      let themeBg = 'rgba(245, 158, 11, 0.05)';
+      let themeBorder = 'rgba(245, 158, 11, 0.15)';
+      
+      if (dept.id === 'nha-tre' || dept.id === 'T001' || lowerName.includes('nhà trẻ')) {
+        themeColor = '#f43f5e'; // Rose
+        themeBg = 'rgba(244, 63, 94, 0.05)';
+        themeBorder = 'rgba(244, 63, 94, 0.15)';
+      } else if (dept.id === 'khoi-mam' || dept.id === 'T002' || lowerName.includes('mầm')) {
+        themeColor = '#10b981'; // Emerald
+        themeBg = 'rgba(16, 185, 129, 0.05)';
+        themeBorder = 'rgba(16, 185, 129, 0.15)';
+      } else if (dept.id === 'khoi-choi' || dept.id === 'T003' || lowerName.includes('chồi')) {
+        themeColor = '#06b6d4'; // Cyan
+        themeBg = 'rgba(6, 182, 212, 0.05)';
+        themeBorder = 'rgba(6, 182, 212, 0.15)';
+      } else if (dept.id === 'khoi-la' || dept.id === 'T004' || lowerName.includes('lá')) {
+        themeColor = '#8b5cf6'; // Purple
+        themeBg = 'rgba(139, 92, 246, 0.05)';
+        themeBorder = 'rgba(139, 92, 246, 0.15)';
+      } else if (dept.id === 'dinh-duong' || dept.id === 'T005' || lowerName.includes('dinh dưỡng') || lowerName.includes('bếp')) {
+        themeColor = '#e11d48'; // Red/Rose
+        themeBg = 'rgba(225, 29, 72, 0.05)';
+        themeBorder = 'rgba(225, 29, 72, 0.15)';
+      }
+
+      return (
+        <div
+          key={dept.id}
+          onClick={() => {
+            setSelectedDeptId(dept.id);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className="lp-dept-card group cursor-pointer"
+          style={{ 
+            '--dept-accent': themeColor,
+            '--dept-accent-bg': themeBg,
+            '--dept-accent-border': themeBorder 
+          } as React.CSSProperties}
+        >
+          {/* Top colored background header wave */}
+          <div className="lp-dept-card-header-bg" />
+          
+          <div className="lp-dept-card-inner pt-6 relative z-10">
+            {/* Logo Badge (Prominent circular shape at the top center) */}
+            <div className="lp-dept-card-logo-container">
+              {dept.logo && isImageUrl(dept.logo) ? (
+                <img src={dept.logo} alt="" className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-[var(--dept-accent)] bg-[var(--dept-accent-bg)]">
+                  <LogoIcon size={32} />
+                </div>
+              )}
+            </div>
+
+            {/* Category tag */}
+            <span 
+              className="lp-dept-card-badge mx-auto"
+              style={{ color: themeColor, backgroundColor: themeBg, borderColor: themeBorder }}
+            >
+              {isPedagogy ? 'Khối Sư Phạm' : 'Nghiệp Vụ & Hỗ Trợ'}
+            </span>
+            
+            {/* Title & ID */}
+            <div className="text-center mt-3 mb-2">
+              <h3 className="font-serif font-bold text-[#1e2a3a] text-sm sm:text-base leading-tight group-hover:text-[var(--dept-accent)] transition-colors duration-300">
+                {dept.name}
+              </h3>
+              <p className="text-[9px] text-[#7b8a9e] font-bold tracking-wider uppercase mt-1">
+                Mã tổ: {dept.id}
+              </p>
+            </div>
+            
+            {/* Description */}
+            <p className="text-xs text-[#4a5568] leading-relaxed text-center mb-4 line-clamp-3 min-h-[54px] px-2">
+              {dept.desc}
+            </p>
+            
+            {/* Separator line */}
+            <div className="w-16 h-[2px] bg-[var(--dept-accent)] opacity-30 mx-auto mb-4" />
+            
+            {/* Personnel Pills */}
+            <div className="flex flex-wrap justify-center gap-2 mb-5 px-1">
+              {head && (
+                <div className="lp-dept-card-pill">
+                  <User size={11} className="text-[#f59e0b] flex-shrink-0" />
+                  <span><strong>Tổ trưởng:</strong> {head.name}</span>
+                </div>
+              )}
+              {deputy && (
+                <div className="lp-dept-card-pill">
+                  <UserCheck size={11} className="text-[#7b8a9e] flex-shrink-0" />
+                  <span><strong>Tổ phó:</strong> {deputy.name}</span>
+                </div>
+              )}
+              <div className="lp-dept-card-pill">
+                <Users size={11} className="text-[#2c5ea0] flex-shrink-0" />
+                <span>{dept.members.length} nhân sự</span>
+              </div>
+            </div>
+            
+            {/* Action link */}
+            <div className="lp-dept-card-footer mt-auto flex items-center justify-between text-xs font-bold text-[#2d251e] group-hover:text-[var(--dept-accent)] transition-colors duration-300">
+              <span>Xem sơ đồ & chi tiết</span>
+              <div className="w-7 h-7 rounded-full bg-[#fcf8f2] border border-[#e7e3d4] flex items-center justify-center text-[#2d251e] group-hover:bg-[var(--dept-accent)] group-hover:text-white group-hover:border-[var(--dept-accent)] transition-all duration-300 shadow-sm transform group-hover:translate-x-1">
+                <ArrowRight size={13} />
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
     return (
       <div className="lp-section" style={{ paddingTop: '8rem' }}>
         <div className="lp-section-inner">
@@ -1774,79 +1912,32 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterSystem }) => {
           {/* Các Tổ chuyên môn */}
           <div>
             <h2 className="lp-sub-title text-center">Các Tổ Chuyên môn & Nghiệp vụ</h2>
-            <div className="lp-divider" style={{ margin: '0.5rem auto 3rem' }} />
+            <div className="lp-divider" style={{ margin: '0.5rem auto 2rem' }} />
+            
+            {/* Filter Tabs/Chips */}
+            <div className="flex justify-center gap-3 mb-10 flex-wrap">
+              {[
+                { id: 'all', label: 'Tất cả các tổ', count: departmentsData.length },
+                { id: 'pedagogy', label: 'Khối Sư Phạm', count: gradeLevelDepts.length },
+                { id: 'operational', label: 'Nghiệp Vụ & Hỗ Trợ', count: specializedDepts.length }
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveDeptFilter(tab.id as any)}
+                  className={`px-5 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase transition-all duration-300 shadow-sm cursor-pointer border ${
+                    activeDeptFilter === tab.id
+                      ? 'bg-[#2d251e] text-[#f59e0b] border-[#2d251e] shadow-md scale-105'
+                      : 'bg-[#fdfbf7] text-[#4a3f35] border-[#e7e3d4] hover:bg-[#fcf8f2] hover:border-[#f59e0b]'
+                  }`}
+                >
+                  {tab.label} ({tab.count})
+                </button>
+              ))}
+            </div>
 
-            {(() => {
-              const gradeLevelDepts = departmentsData.filter(
-                dept => dept.type === 'Tổ khối lớp' || dept.name.toLowerCase().includes('khối')
-              );
-              const specializedDepts = departmentsData.filter(
-                dept => dept.type === 'Tổ chuyên biệt' || (!dept.type && !dept.name.toLowerCase().includes('khối'))
-              );
-
-              const renderDeptButton = (dept: Department) => {
-                const LogoIcon = getDepartmentIcon(dept.logo);
-                return (
-                  <button
-                    key={dept.id}
-                    onClick={() => {
-                      setSelectedDeptId(dept.id);
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                    className="flex flex-col items-center justify-center gap-2 p-3 bg-[#f5f8fc] hover:bg-[#e8eef6] border border-[#b8c6d9] hover:border-[#2c5ea0] rounded-full transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg focus:outline-none w-[140px] h-[140px] sm:w-[150px] sm:h-[150px] text-center group flex-shrink-0"
-                  >
-                    <div className="w-14 h-14 bg-[#2c5ea0]/10 border border-[#2c5ea0]/20 text-[#2c5ea0] group-hover:bg-[#2c5ea0] group-hover:text-[#f5f8fc] flex items-center justify-center rounded-full transition-all duration-300 shadow-sm overflow-hidden flex-shrink-0">
-                      {dept.logo && isImageUrl(dept.logo) ? (
-                        <img src={dept.logo} alt="" className="w-full h-full object-cover rounded-full" />
-                      ) : (
-                        <LogoIcon size={24} />
-                      )}
-                    </div>
-                    <span className="font-serif font-bold text-[11px] sm:text-xs text-[#1e2a3a] group-hover:text-[#2c5ea0] transition-colors leading-tight max-w-[110px] sm:max-w-[120px]">
-                      {dept.name}
-                    </span>
-                  </button>
-                );
-              };
-
-              return (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto px-4 mb-12">
-                  {/* Cột 1: Tổ Khối Lớp */}
-                  <div className="bg-[#fcf8f2] border border-[#c2b5a5] rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col items-center transition-all duration-300 hover:shadow-md">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-8 h-8 rounded-lg bg-[#f59e0b]/10 border border-[#f59e0b]/20 flex items-center justify-center text-[#d97706]">
-                        <School size={18} />
-                      </div>
-                      <h3 className="font-serif font-bold text-lg sm:text-xl text-[#2d251e]">Tổ Khối Lớp</h3>
-                    </div>
-                    <p className="text-xs text-[#4a5568] text-center mb-6 max-w-sm leading-relaxed">
-                      Phụ trách công tác chăm sóc, giáo dục và chủ nhiệm các bé theo từng khối lớp từ Nhà trẻ, Mầm, Chồi đến Lá.
-                    </p>
-                    <div className="w-16 h-[1px] bg-[#c2b5a5] mb-6" />
-                    <div className="flex flex-wrap justify-center gap-4 sm:gap-5 w-full">
-                      {gradeLevelDepts.map((dept) => renderDeptButton(dept))}
-                    </div>
-                  </div>
-
-                  {/* Cột 2: Tổ Chuyên Biệt */}
-                  <div className="bg-[#fcf8f2] border border-[#c2b5a5] rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col items-center transition-all duration-300 hover:shadow-md">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-8 h-8 rounded-lg bg-[#f59e0b]/10 border border-[#f59e0b]/20 flex items-center justify-center text-[#d97706]">
-                        <Award size={18} />
-                      </div>
-                      <h3 className="font-serif font-bold text-lg sm:text-xl text-[#2d251e]">Tổ Chuyên Biệt</h3>
-                    </div>
-                    <p className="text-xs text-[#4a5568] text-center mb-6 max-w-sm leading-relaxed">
-                      Phụ trách công tác chuyên môn dinh dưỡng bán trú vệ sinh an toàn và các hoạt động chăm sóc hỗ trợ trẻ.
-                    </p>
-                    <div className="w-16 h-[1px] bg-[#c2b5a5] mb-6" />
-                    <div className="flex flex-wrap justify-center gap-4 sm:gap-5 w-full">
-                      {specializedDepts.map((dept) => renderDeptButton(dept))}
-                    </div>
-                  </div>
-                </div>
-              );
-            })()}
+            <div className="lp-dept-grid mb-12">
+              {filteredDepts.map((dept) => renderDeptCard(dept))}
+            </div>
           </div>
         </div>
       </div>
@@ -2283,25 +2374,219 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onEnterSystem }) => {
         .lp-video-placeholder { aspect-ratio: 16/9; background: #1a1511; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
         .lp-video-placeholder p { color: #c2b5a5; font-size: 0.85rem; }
 
-        /* ── DEPARTMENT ORG CHART ── */
+        /* ── DEPARTMENT ORG CHART & DEPT CARDS REDESIGN ── */
+        .lp-dept-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+          gap: 2.5rem;
+          width: 100%;
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: 1.5rem 1rem;
+        }
+        .lp-dept-card {
+          position: relative;
+          background: #ffffff;
+          border: 1px solid #e7e3d4;
+          border-radius: 24px 60px 24px 60px;
+          padding: 2rem 1.75rem 1.75rem;
+          transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+          overflow: hidden;
+          box-shadow: 0 4px 20px rgba(44, 40, 37, 0.02);
+          display: flex;
+          flex-direction: column;
+          min-height: 380px;
+        }
+        .lp-dept-card-header-bg {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 100px;
+          background: linear-gradient(to bottom, var(--dept-accent-bg), transparent);
+          z-index: 1;
+          transition: all 0.3s ease;
+        }
+        .lp-dept-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 5px;
+          background: var(--dept-accent, #f59e0b);
+          transform: scaleX(0);
+          transform-origin: left;
+          transition: transform 0.35s ease;
+          z-index: 12;
+        }
+        .lp-dept-card:hover {
+          transform: translateY(-10px);
+          box-shadow: 0 25px 45px rgba(44, 40, 37, 0.08), 0 5px 15px rgba(0, 0, 0, 0.02);
+          border-color: var(--dept-accent, #f59e0b);
+          border-radius: 60px 24px 60px 24px;
+        }
+        .lp-dept-card:hover::before {
+          transform: scaleX(1);
+        }
+        .lp-dept-card-inner {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          flex: 1;
+        }
+        .lp-dept-card-logo-container {
+          width: 88px;
+          height: 88px;
+          border-radius: 9999px;
+          border: 4px solid #ffffff;
+          box-shadow: 0 4px 15px rgba(44, 40, 37, 0.06);
+          margin: 0 auto 1rem;
+          overflow: hidden;
+          background: #ffffff;
+          position: relative;
+          z-index: 10;
+          transition: all 0.35s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .lp-dept-card-logo-container img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+        .lp-dept-card:hover .lp-dept-card-logo-container {
+          transform: scale(1.08) rotate(3deg);
+          box-shadow: 0 10px 25px rgba(44, 40, 37, 0.12);
+          border-color: var(--dept-accent-bg);
+        }
+        .lp-dept-card-badge {
+          align-self: center;
+          font-size: 8px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          padding: 0.25rem 0.65rem;
+          border-radius: 9999px;
+          border: 1px solid transparent;
+          margin-bottom: 0.5rem;
+          z-index: 10;
+        }
+        .lp-dept-card-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+          padding: 0.3rem 0.75rem;
+          background: #fdfbf7;
+          border: 1px solid #e7e3d4;
+          border-radius: 9999px;
+          font-size: 10px;
+          color: #4a3f35;
+          transition: all 0.3s ease;
+        }
+        .lp-dept-card:hover .lp-dept-card-pill {
+          background: #ffffff;
+          border-color: var(--dept-accent-border);
+        }
+        .lp-dept-card-footer {
+          border-top: 1px dashed #e7e3d4;
+          padding-top: 1rem;
+        }
+        
+        /* Detail View & Org Container */
+        .lp-dept-org-container {
+          background: #ffffff; 
+          border: 1px solid #e7e3d4;
+          border-radius: 24px;
+          padding: 3rem 2rem;
+          box-shadow: 0 4px 20px rgba(44, 40, 37, 0.02);
+        }
+        .lp-table-wrapper {
+          border: 1px solid #e7e3d4;
+          border-radius: 16px;
+          overflow: hidden;
+          box-shadow: 0 4px 15px rgba(44, 40, 37, 0.02);
+        }
+
         .lp-dept-org-chart { display: flex; flex-direction: column; align-items: center; width: 100%; margin-top: 2rem; }
         .lp-dept-org-level { display: flex; justify-content: center; width: 100%; }
-        .lp-dept-org-node { padding: 1rem 1.5rem; border: 2px solid #c2b5a5; text-align: center; min-width: 180px; box-shadow: 2px 2px 0 rgba(44,40,37,0.03); position: relative; }
-        .lp-dept-org-node h4 { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.2rem; }
-        .lp-dept-org-node p { font-size: 0.72rem; color: #c2b5a5; margin: 0; }
-        .lp-dept-org-node .badge { font-size: 7px; font-weight: 700; text-transform: uppercase; color: #2d251e; background: #f59e0b; padding: 0.2rem 0.5rem; border-radius: 2px; margin-bottom: 0.4rem; display: inline-block; letter-spacing: 0.1em; }
-        .lp-dept-org-node.head { border-color: #f59e0b; background: #2d251e; }
-        .lp-dept-org-node.head h4 { color: #f59e0b; }
-        .lp-dept-org-node.deputy { border-color: #f59e0b; background: #fcf8f2; }
-        .lp-dept-org-node.deputy h4 { color: #d97706; }
-        .lp-dept-org-node.member { border-color: #c2b5a5; background: #fdfbf7; }
-        .lp-dept-org-node.member h4 { color: #2d251e; }
-        .lp-dept-org-line-vertical { width: 2px; height: 24px; background: #c2b5a5; }
-        .lp-dept-org-line-horizontal-container { width: 100%; flex: 1; display: flex; justify-content: center; position: relative; height: 24px; }
+        .lp-dept-org-node { 
+          padding: 1.2rem 1.8rem; 
+          border: 1.5px solid #e7e3d4; 
+          border-radius: 16px;
+          text-align: center; 
+          min-width: 200px; 
+          box-shadow: 0 4px 12px rgba(44,40,37,0.03); 
+          position: relative; 
+          transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .lp-dept-org-node:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 10px 25px rgba(44,40,37,0.08);
+        }
+        .lp-dept-org-node h4 { 
+          font-family: 'Playfair Display', serif; 
+          font-size: 1rem; 
+          font-weight: 700; 
+          margin-bottom: 0.25rem; 
+        }
+        .lp-dept-org-node p { 
+          font-size: 0.75rem; 
+          color: #7b8a9e; 
+          margin: 0; 
+        }
+        .lp-dept-org-node .badge { 
+          font-size: 7px; 
+          font-weight: 700; 
+          text-transform: uppercase; 
+          color: #2d251e; 
+          background: #f59e0b; 
+          padding: 0.25rem 0.75rem; 
+          border-radius: 9999px; 
+          margin-bottom: 0.5rem; 
+          display: inline-block; 
+          letter-spacing: 0.1em; 
+        }
+        .lp-dept-org-node.head { 
+          border-color: #f59e0b; 
+          background: #2d251e; 
+        }
+        .lp-dept-org-node.head h4 { 
+          color: #f59e0b; 
+        }
+        .lp-dept-org-node.head p { 
+          color: #c2b5a5; 
+        }
+        .lp-dept-org-node.deputy { 
+          border-color: #f59e0b; 
+          background: #fdfbf7; 
+        }
+        .lp-dept-org-node.deputy h4 { 
+          color: #d97706; 
+        }
+        .lp-dept-org-node.member { 
+          border-color: #e7e3d4; 
+          background: #ffffff; 
+        }
+        .lp-dept-org-node.member h4 { 
+          color: #2d251e; 
+        }
+        .lp-dept-org-line-vertical { width: 2px; height: 32px; background: #c2b5a5; }
+        .lp-dept-org-line-horizontal-container { width: 100%; flex: 1; display: flex; justify-content: center; position: relative; height: 32px; }
         .lp-dept-org-line-horizontal { height: 2px; background: #c2b5a5; position: absolute; top: 0; }
         .lp-dept-org-members-row { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; width: 100%; }
         .lp-dept-org-member-container { display: flex; flex-direction: column; align-items: center; }
-        .lp-dept-org-member-connector { width: 2px; height: 24px; background: #c2b5a5; }
+        .lp-dept-org-member-connector { width: 2px; height: 32px; background: #c2b5a5; }
+        
+        .animate-pulse-slow {
+          animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: .85; }
+        }
       `}</style>
 
       <div className="lp-page">

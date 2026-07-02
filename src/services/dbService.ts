@@ -432,6 +432,16 @@ export const DEFAULT_DEPARTMENTS: Department[] = [
     status: 'Hoạt Động',
     logo: 'school',
     applicableGrades: ['Lá']
+  },
+  {
+    id: 'T005',
+    name: 'Tổ Dinh Dưỡng & Bếp Ăn',
+    description: 'Phụ trách tính toán khẩu phần ăn khoa học, chế biến suất ăn vệ sinh, giàu dinh dưỡng cho sự phát triển khỏe mạnh của trẻ.',
+    head: 'Cô Đặng Thị Quỳnh',
+    staffCount: 2,
+    status: 'Hoạt Động',
+    logo: 'sport',
+    applicableGrades: []
   }
 ];
 export const DEFAULT_SUBJECTS: Subject[] = [];

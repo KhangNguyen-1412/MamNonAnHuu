@@ -47,6 +47,7 @@ export interface Staff {
   seniorityAllowance?: number | string; // % phụ cấp thâm niên
   preferentialAllowance?: number | string; // % phụ cấp ưu đãi nghề
   assignedClass?: string; // Lớp chủ nhiệm
+  mainSubject?: string; // Chuyên môn/Môn học chính phụ trách
   evaluation?: StaffEvaluation; // Kết quả đánh giá chuẩn nghề nghiệp
   personalEmail?: string; // Email cá nhân (Khôi phục)
 }
